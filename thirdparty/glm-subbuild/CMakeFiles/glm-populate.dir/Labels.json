@@ -1,0 +1,46 @@
+{
+	"sources" : 
+	[
+		{
+			"file" : "C:/Coding/GDPARCM/GRAPH-Master1/thirdparty/glm-subbuild/CMakeFiles/glm-populate"
+		},
+		{
+			"file" : "C:/Coding/GDPARCM/GRAPH-Master1/thirdparty/glm-subbuild/CMakeFiles/glm-populate.rule"
+		},
+		{
+			"file" : "C:/Coding/GDPARCM/GRAPH-Master1/thirdparty/glm-subbuild/CMakeFiles/glm-populate-complete.rule"
+		},
+		{
+			"file" : "C:/Coding/GDPARCM/GRAPH-Master1/thirdparty/glm-subbuild/glm-populate-prefix/src/glm-populate-stamp/glm-populate-build.rule"
+		},
+		{
+			"file" : "C:/Coding/GDPARCM/GRAPH-Master1/thirdparty/glm-subbuild/glm-populate-prefix/src/glm-populate-stamp/glm-populate-configure.rule"
+		},
+		{
+			"file" : "C:/Coding/GDPARCM/GRAPH-Master1/thirdparty/glm-subbuild/glm-populate-prefix/src/glm-populate-stamp/glm-populate-download.rule"
+		},
+		{
+			"file" : "C:/Coding/GDPARCM/GRAPH-Master1/thirdparty/glm-subbuild/glm-populate-prefix/src/glm-populate-stamp/glm-populate-install.rule"
+		},
+		{
+			"file" : "C:/Coding/GDPARCM/GRAPH-Master1/thirdparty/glm-subbuild/glm-populate-prefix/src/glm-populate-stamp/glm-populate-mkdir.rule"
+		},
+		{
+			"file" : "C:/Coding/GDPARCM/GRAPH-Master1/thirdparty/glm-subbuild/glm-populate-prefix/src/glm-populate-stamp/glm-populate-patch.rule"
+		},
+		{
+			"file" : "C:/Coding/GDPARCM/GRAPH-Master1/thirdparty/glm-subbuild/glm-populate-prefix/src/glm-populate-stamp/glm-populate-test.rule"
+		},
+		{
+			"file" : "C:/Coding/GDPARCM/GRAPH-Master1/thirdparty/glm-subbuild/glm-populate-prefix/src/glm-populate-stamp/glm-populate-update.rule"
+		}
+	],
+	"target" : 
+	{
+		"labels" : 
+		[
+			"glm-populate"
+		],
+		"name" : "glm-populate"
+	}
+}

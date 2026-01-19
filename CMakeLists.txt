@@ -1,4 +1,6 @@
-﻿cmake_minimum_required(VERSION 3.10)
+﻿cmake_minimum_required(VERSION 3.15)
+
+set(CMAKE_CXX_STANDARD 20)
 
 set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreadedDebug$<$<CONFIG:Debug>:Debug>")
 set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Release>:Release>")
@@ -32,19 +34,62 @@ set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)
 #Set GLFW for this project
 FetchContent_MakeAvailable(glfw)
 
+#Get GLAD
+FetchContent_Declare(
+	glad
+	GIT_REPOSITORY https://github.com/Dav1dde/glad.git
+	GIT_TAG v2.0.6
+	SOURCE_SUBDIR cmake
+)
+
+#Set GLAD for this project
+FetchContent_MakeAvailable(glad)
+
+glad_add_library(
+	glad_gl_core_46 STATIC
+	REPRODUCIBLE
+	LOADER
+	API gl:core=4.6
+)
+
+#Get GLM
+FetchContent_Declare(
+	glm
+	GIT_REPOSITORY	https://github.com/g-truc/glm.git
+	GIT_TAG 	1.0.1 #refs/tags/1.0.1
+)
+
+FetchContent_MakeAvailable(glm)
+
 #OpenGL should be preinstalled
 find_package(OpenGL REQUIRED)
 
 # Add source to this project's executable.
 # Change these to your files
-add_executable (GRAPH-Master1 "GRAPH-Master1.cpp" "GRAPH-Master1.h")
+add_executable (GRAPH-Master1 "GRAPH-Master1.cpp" "GRAPH-Master1.h" "tiny_obj_loader.h")
 
 #Link the required libraries
-target_link_libraries(GRAPH-Master1
+target_link_libraries(GRAPH-Master1 PRIVATE 
 						glfw
 						OpenGL::GL
+						glad_gl_core_46
+						glm::glm
 )
 
-if (CMAKE_VERSION VERSION_GREATER 3.12)
-  set_property(TARGET GRAPH-Master1 PROPERTY CXX_STANDARD 20)
-endif()
+add_custom_command(
+	TARGET GRAPH-Master1
+	POST_BUILD
+	COMMAND ${CMAKE_COMMAND} -E copy_directory
+	"${CMAKE_CURRENT_SOURCE_DIR}/Shaders"
+		"$<TARGET_FILE_DIR:GRAPH-Master1>/Shaders"
+	COMMENT "Copying assets to build dir"
+)
+
+add_custom_command(
+	TARGET GRAPH-Master1
+	POST_BUILD
+	COMMAND ${CMAKE_COMMAND} -E copy_directory
+		"${CMAKE_CURRENT_SOURCE_DIR}/3D"
+		"$<TARGET_FILE_DIR:GRAPH-Master1>/3D"
+	COMMENT "Copying assets to build dir"
+)

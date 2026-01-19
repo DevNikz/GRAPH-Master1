@@ -1,6 +1,12 @@
 ﻿#pragma once
 
-#include <iostream>
+#include <glad/gl.h>
 #include <GLFW/glfw3.h>
-#include <math.h>
-#define PI 3.14159265358979323846
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
+#include <iostream>
+#include <string>
+
+#define TINYOBJLOADER_IMPLEMENTATION
+#include "tiny_obj_loader.h"
