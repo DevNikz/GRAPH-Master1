@@ -126,7 +126,6 @@ private:
     std::vector<GLuint> mesh_indices;
     GLuint vao, vbo, ebo, vbo_uv, texture;
     int img_width, img_height, colorChannels;
-    std::vector<GLfloat> fullVertexData;
 
 public:
     string modelName;
@@ -196,14 +195,9 @@ void Model::DrawTex(GLuint _shader) {
 
 void Model::DrawModel() {
     glBindVertexArray(vao);
-
-    //Vertex Data Method
-    glDrawArrays(GL_TRIANGLES, 0, fullVertexData.size() / 5);
-
-    //EBO4
-    //glDrawElements(GL_TRIANGLES,
-    //    mesh_indices.size(),
-    //    GL_UNSIGNED_INT, 0);
+    glDrawElements(GL_TRIANGLES,
+        mesh_indices.size(),
+        GL_UNSIGNED_INT, 0);
 }
 
 void Model::DeleteBuffers() {
@@ -212,7 +206,6 @@ void Model::DeleteBuffers() {
 }
 
 void Model::InitModel() {
-    //Load Object. If success, it loads
     bool success = tinyobj::LoadObj(
         &attributes,
         &shapes,
@@ -221,74 +214,29 @@ void Model::InitModel() {
         //path.c_str()
         modelName.c_str()
     );
-    
-    
-    for (int i = 0; i < shapes[0].mesh.indices.size(); i++) {
-        tinyobj::index_t vData = shapes[0].mesh.indices[i];
-        fullVertexData.push_back(attributes.vertices[(vData.vertex_index * 3)]); //X
-        fullVertexData.push_back(attributes.vertices[(vData.vertex_index * 3) + 1]); //Y
-        fullVertexData.push_back(attributes.vertices[(vData.vertex_index * 3) + 2]); //Z
-        fullVertexData.push_back(attributes.texcoords[(vData.texcoord_index * 2)]); //U
-        fullVertexData.push_back(attributes.texcoords[(vData.texcoord_index * 2) + 1]); //V
-    }
 
-    /*
     for (int i = 0; i < shapes[0].mesh.indices.size(); i++) {
         mesh_indices.push_back(
             shapes[0].mesh.indices[i].vertex_index
         );
     }
-    */
 
     //(SHADERS) Generate vertices and buffers
     glGenVertexArrays(1, &vao);
     glGenBuffers(1, &vbo);
-    //glGenBuffers(1, &vbo_uv);
-    //glGenBuffers(1, &ebo);
+    glGenBuffers(1, &vbo_uv);
+    glGenBuffers(1, &ebo);
 
     //(POSITIONS) VBO
     glBindVertexArray(vao);
     glBindBuffer(GL_ARRAY_BUFFER, vbo);
-
-    //Using fullvertexdata
-    glBufferData(
-        GL_ARRAY_BUFFER,
-        sizeof(GLfloat) * fullVertexData.size(),
-        fullVertexData.data(),
-        GL_DYNAMIC_DRAW
-    );
-
-    glVertexAttribPointer(
-        //0 = Position
-        0, // Index / buffer index
-        3, // x y z
-        GL_FLOAT, // array of floats
-        GL_FALSE, // if its normalized
-        5 * sizeof(float), // size of data per vertex
-        (void*)0
-    );
-    glEnableVertexAttribArray(0);
-
-    GLintptr uvPtr = 3 * sizeof(float);
-
-    //UV
-    glVertexAttribPointer(
-        2,
-        2,
-        GL_FLOAT,
-        GL_FALSE,
-        5 * sizeof(float),
-        (void*)uvPtr
-    );
-    glEnableVertexAttribArray(2);
-
-    /*
     glBufferData(
         GL_ARRAY_BUFFER,
         sizeof(GL_FLOAT) * attributes.vertices.size(),
         &attributes.vertices[0],
         GL_DYNAMIC_DRAW
     );
+
     //EBO
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
     glBufferData(
@@ -325,7 +273,6 @@ void Model::InitModel() {
         (void*)0
     );
     glEnableVertexAttribArray(2);
-    */
     glBindVertexArray(0);
 }
 

@@ -67,6 +67,7 @@ find_package(OpenGL REQUIRED)
 # Add source to this project's executable.
 # Change these to your files
 add_executable (GRAPH-Master1 "GRAPH-Master1.cpp" "GRAPH-Master1.h" "tiny_obj_loader.h" "stb_image.h" )
+#add_executable (GRAPH-Master1 "Quiz1.cpp" "tiny_obj_loader.h")
 
 #Link the required libraries
 target_link_libraries(GRAPH-Master1 PRIVATE 
